@@ -6,11 +6,15 @@ simple slideshow webapp with [Express](http://expressjs.com).
 Usage
 -----
 
-Place some image files to `./public/images/` you want to use in slideshow. Then,
+```sh
+$ git clone https://github.com/keisei1092/node-simple-slideshow
+$ cd node-simple-slideshow
+$ mkdir public/images
+```
+
+* Place some image files to `./public/images/` you want to use in slideshow. Then,
 
 ```sh
-$ git clone
-$ cd node-simple-slideshow
 $ npm install
 $ DEBUG=myapp:* npm start
 ```
