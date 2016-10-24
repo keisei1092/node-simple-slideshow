@@ -13,8 +13,9 @@ block content
     $.ajax({
       url: 'public/images/',
       success: function (data) {
-         $(data).find('a:contains("raw")').each(function() {
-             filenames.push(this.href.replace(window.location.host, "").replace("http:///", "").substring(7));
+         $(data).find('a:contains("-")').each(function() {
+             var filename = this.href.replace(window.location.host, "").replace("http:///", "").substring(7);
+             filenames.push(decodeURIComponent(filename));
          });
          var changeImage = function() {
            count++;
