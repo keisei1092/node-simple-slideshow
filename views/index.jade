@@ -10,6 +10,23 @@ block content
   script.
     var filenames = [];
     var count = -1;
+    
+    var timer = function() {
+      count++;        
+      changeImage();
+      if (count >= filenames.length - 1) {
+        count = -1;
+        console.log('reached last file. count was back to zero');
+      }
+    }
+ 
+    var changeImage = function() {
+      $('img').attr('src', filenames[count]);
+      var displayname = filenames[count].substring(7);
+      displayname = displayname.substring(0, displayname.length - 4);
+      $('.filename').html(displayname);
+    }
+ 
     $.ajax({
       url: 'public/images/',
       success: function (data) {
@@ -17,18 +34,22 @@ block content
              var filename = this.href.replace(window.location.host, "").replace("http:///", "").substring(7);
              filenames.push(decodeURIComponent(filename));
          });
-         var changeImage = function() {
-           count++;
-           $('img').attr('src', filenames[count]);
-           var displayname = filenames[count].substring(7);
-           displayname = displayname.substring(0, displayname.length - 4);
-           $('.filename').html(displayname);
-           if (count >= filenames.length - 1) {
-             count = -1;
-             console.log('reached last file. count was back to zero');
-           }
-         }
-         setInterval(changeImage, 10000);
+         
+         setInterval(timer, 10000);
        }
     });
+
+    document.onkeydown = checkKey;
     
+    function checkKey(e) {
+      e = e || window.event;
+      if (e.keyCode == '37') {
+        // count back
+        count--;
+        changeImage();
+      } else if (e.keyCode == '39') {
+        // count plus
+        count++;
+        changeImage();
+      }
+    }
